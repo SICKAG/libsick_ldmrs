@@ -1059,7 +1059,7 @@ FieldParameter* LdmrsSopasLayer::colaB_fieldDecoder(SopasAnswer* answer)
 		if (fieldRad == 1)
 		{
 			printError("LdmrsSopasLayer::colaB_fieldDecoder: Found radial field, but the LD-MRS does not support radial fields!");
-			return false;
+			return NULL;
 		}
 
 		// Dynamic field
@@ -1067,7 +1067,7 @@ FieldParameter* LdmrsSopasLayer::colaB_fieldDecoder(SopasAnswer* answer)
 		if (fieldDyn == 1)
 		{
 			printError("LdmrsSopasLayer::colaB_fieldDecoder: Found dynamic field, but the LD-MRS does not support dynamic fields!");
-			return false;
+			return NULL;
 		}
 
 		// The rest of the data

@@ -45,6 +45,7 @@ std::string toHexStringNbble(UINT8 val);
 // Konvertiere eine Integer-Zahl in einen String
 std::string toString(UINT32 val);
 std::string toString(INT32 val);
+std::string toString(size_t val);
 
 // Konvertiere eine Gleitkomma-Zahl in einen String
 std::string toString(double val, int digits_after_decimal_point);
