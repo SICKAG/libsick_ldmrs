@@ -127,8 +127,32 @@ ADD_EXECUTABLE (LDMRS_Example.pc WIN32
   ${LDMRS_Example_SOURCES}
   ${LDMRS_Example_HEADERS}
 )
-
-INSTALL (TARGETS LDMRS_Example.pc RUNTIME DESTINATION bin)
-
-# Link against pthread for threading
 target_link_libraries(LDMRS_Example.pc pthread)
+
+# The target library
+add_library(sick_ldmrs SHARED
+  ${LDMRS_Example_SOURCES}
+  ${LDMRS_Example_HEADERS})
+target_link_libraries(sick_ldmrs pthread)
+
+set(SICK_LDMRS_PUBLIC_HEADERS "")
+foreach(HEADER ${LDMRS_Example_HEADERS})
+  set(SICK_LDMRS_PUBLIC_HEADERS "${SICK_LDMRS_PUBLIC_HEADERS}${PROJECT_SOURCE_DIR}/src/${HEADER}\;")
+endforeach()
+
+set_target_properties(sick_ldmrs PROPERTIES
+  PUBLIC_HEADER ${SICK_LDMRS_PUBLIC_HEADERS})
+
+
+install(TARGETS LDMRS_Example.pc
+  # IMPORTANT: Add the LDMRS_Example.pc executable to the "export-set"
+  EXPORT SickLDMRSTargets
+  RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin)
+
+install(TARGETS sick_ldmrs
+  # IMPORTANT: Add the sick_ldmrs library to the "export-set"
+  EXPORT SickLDMRSTargets
+  RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin
+  LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT shlib
+  PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}/sick_ldmrs"
+    COMPONENT dev)
