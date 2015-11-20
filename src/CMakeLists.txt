@@ -6,6 +6,7 @@
 #
 
 SET (LDMRS_Example_HEADERS
+  BasicDatatypes.hpp
 	application/LdmrsApp.hpp
 	application/LdmrsFieldApp.hpp
 	application/LdmrsSectorChangeApp.hpp
