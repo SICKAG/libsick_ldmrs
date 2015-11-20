@@ -229,13 +229,13 @@ bool LDMRS::writeField(UINT16 fieldNum, const FieldParameter& para)
 	if (result == true)
 	{
 		printInfoMessage("LDMRS::writeField: Login was successful, writing field now.", beVerboseHere);
-		result |= m_sopas->action_writeField(fieldNum, para);
+		result = m_sopas->action_writeField(fieldNum, para);
 	}
 	
 	if (result == true)
 	{
 		printInfoMessage("LDMRS::writeField: Field was written, logging out now.", beVerboseHere);
-		result |= m_sopas->action_logout();
+		result = m_sopas->action_logout();
 	}
 	
 	printInfoMessage("LDMRS::writeField: All done, leaving.", beVerboseHere);
@@ -258,13 +258,13 @@ bool LDMRS::writeEvalCases(const EvalCases& evalCases)
 	if (result == true)
 	{
 		printInfoMessage("LDMRS::writeEvalCases: Login was successful, writing eval cases now.", beVerboseHere);
-		result |= m_sopas->action_writeEvalCases(evalCases);
+		result = m_sopas->action_writeEvalCases(evalCases);
 	}
 	
 	if (result == true)
 	{
 		printInfoMessage("LDMRS::writeEvalCases: Eval cases were written, logging out now.", beVerboseHere);
-		result |= m_sopas->action_logout();
+		result = m_sopas->action_logout();
 	}
 	
 	printInfoMessage("LDMRS::writeEvalCases: All done, leaving.", beVerboseHere);
