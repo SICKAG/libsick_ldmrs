@@ -143,7 +143,8 @@ endforeach()
 
 set_target_properties(sick_ldmrs PROPERTIES
   PUBLIC_HEADER ${SICK_LDMRS_PUBLIC_HEADERS})
-
+set_target_properties(sick_ldmrs PROPERTIES
+  VERSION ${SICK_LDMRS_VERSION} SOVERSION ${SICK_LDMRS_MAJOR_VERSION})
 
 install(TARGETS LDMRS_Example
   # IMPORTANT: Add the LDMRS_Example executable to the "export-set"
