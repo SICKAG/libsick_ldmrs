@@ -45,7 +45,7 @@ add_subdirectory(src)
 ###### create and install Config module ####
 
 # Add all targets to the build-tree export set
-export(TARGETS sick_ldmrs LDMRS_Example.pc
+export(TARGETS sick_ldmrs LDMRS_Example
   FILE "${PROJECT_BINARY_DIR}/SickLDMRSTargets.cmake")
 
 # Export the package for use from the build-tree

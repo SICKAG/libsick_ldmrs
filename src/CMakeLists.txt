@@ -124,11 +124,11 @@ if(COMMAND cmake_policy)
 endif(COMMAND cmake_policy)
 
 # The target executable
-ADD_EXECUTABLE (LDMRS_Example.pc WIN32
+ADD_EXECUTABLE (LDMRS_Example WIN32
   ${LDMRS_Example_SOURCES}
   ${LDMRS_Example_HEADERS}
 )
-target_link_libraries(LDMRS_Example.pc pthread)
+target_link_libraries(LDMRS_Example pthread)
 
 # The target library
 add_library(sick_ldmrs SHARED
@@ -145,8 +145,8 @@ set_target_properties(sick_ldmrs PROPERTIES
   PUBLIC_HEADER ${SICK_LDMRS_PUBLIC_HEADERS})
 
 
-install(TARGETS LDMRS_Example.pc
-  # IMPORTANT: Add the LDMRS_Example.pc executable to the "export-set"
+install(TARGETS LDMRS_Example
+  # IMPORTANT: Add the LDMRS_Example executable to the "export-set"
   EXPORT SickLDMRSTargets
   RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin)
 

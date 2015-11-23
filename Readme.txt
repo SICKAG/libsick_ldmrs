@@ -28,7 +28,7 @@ Example:
 - Call ccmake: "ccmake .."
 - Enter "Release" as the build type
 - Type "c" to configure and "g" to generate, then "q" to quit
-- Call "make" to build the program. The executable (defalt name is LDMRS_Example.pc) is then located in the subdirectory "src".
+- Call "make" to build the program. The executable (defalt name is LDMRS_Example) is then located in the subdirectory "src".
 
 
 Source code
