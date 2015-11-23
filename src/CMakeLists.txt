@@ -136,13 +136,6 @@ add_library(sick_ldmrs SHARED
   ${LDMRS_Example_HEADERS})
 target_link_libraries(sick_ldmrs pthread)
 
-set(SICK_LDMRS_PUBLIC_HEADERS "")
-foreach(HEADER ${LDMRS_Example_HEADERS})
-  set(SICK_LDMRS_PUBLIC_HEADERS "${SICK_LDMRS_PUBLIC_HEADERS}${PROJECT_SOURCE_DIR}/src/${HEADER}\;")
-endforeach()
-
-set_target_properties(sick_ldmrs PROPERTIES
-  PUBLIC_HEADER ${SICK_LDMRS_PUBLIC_HEADERS})
 set_target_properties(sick_ldmrs PROPERTIES
   VERSION ${SICK_LDMRS_VERSION} SOVERSION ${SICK_LDMRS_MAJOR_VERSION})
 
@@ -156,5 +149,7 @@ install(TARGETS sick_ldmrs
   EXPORT SickLDMRSTargets
   RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin
   LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT shlib
-  PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}/sick_ldmrs"
     COMPONENT dev)
+
+install(DIRECTORY . DESTINATION "${INSTALL_INCLUDE_DIR}/sick_ldmrs"
+            FILES_MATCHING PATTERN "*.hpp")
