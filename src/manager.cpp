@@ -194,6 +194,14 @@ bool Manager::addApplication(Sourcetype appType, std::string appName, UINT16 wan
 			return false;
 	}
 	
+	// Namen setzen
+	app->setApplicationName(appName);
+
+	return addApplication(app, wantedId);
+}
+
+bool Manager::addApplication(BasicApplication *app, UINT16 wantedId)
+{
 	// ID erzeugen
 	UINT16 id = wantedId;
 	if (id == 0xFFFF)
@@ -201,9 +209,6 @@ bool Manager::addApplication(Sourcetype appType, std::string appName, UINT16 wan
 		id = getNextSourceId();
 	}
 	app->setSourceId(id);
-	
-	// Namen setzen
-	app->setApplicationName(appName);
 
 	// Device speichern
 	m_appList.push_back(app);

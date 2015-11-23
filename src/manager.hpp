@@ -25,6 +25,7 @@ public:
 	~Manager();
 	
 	bool addApplication(Sourcetype appType, std::string appName, UINT16 wantedId = 0xFFFF);
+	bool addApplication(application::BasicApplication* app, UINT16 wantedId = 0xFFFF);
 	bool addAndRunDevice(Sourcetype deviceType, std::string deviceName, UINT16 wantedId = 0xFFFF);
 	bool importApplications();
 	bool runAllDevices();
