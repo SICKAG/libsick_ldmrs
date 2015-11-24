@@ -79,6 +79,13 @@ public:
 	// Sets the MRS-internal clock to the given time.
 	bool setNtpTime(UINT32 seconds, UINT32 fractionalSec);
 
+	// Sets scan start and end angles.
+	bool setScanAngles(double startAngle, double endAngle);
+
+	// Sets scan frequency.
+	// valid values are 12.5, 25.0 and 50.0 [Hz].
+	bool setScanFrequency(double scanFreq);
+
 	// Function will be called if the scanner loses its tcp connection.
 	static void disconnectFunctionS(void* obj);
 

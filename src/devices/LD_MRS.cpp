@@ -332,6 +332,62 @@ bool LDMRS::setNtpTime(UINT32 seconds, UINT32 fractionalSec)
 	return result;
 }
 
+bool LDMRS::setScanAngles(double startAngle, double endAngle)
+{
+	bool result;
+	bool beVerboseHere = m_beVerbose;
+
+	printInfoMessage("LDMRS::setScanAngles: Called.", beVerboseHere);
+
+	if (m_lux == NULL)
+	{
+		printError("LDMRS::setScanAngles: No LUX-Base object available, aborting!");
+		return false;
+	}
+
+	result = m_lux->cmd_setScanAngles(startAngle, endAngle);
+	if (result == true)
+	{
+		printInfoMessage("LDMRS::setScanAngles: scan angles were set.", beVerboseHere);
+	}
+	else
+	{
+		// Failure
+		printError("LDMRS::setScanAngles: Failed to set scan angles!");
+	}
+
+	printInfoMessage("LDMRS::setScanAngles: All done, leaving.", beVerboseHere);
+	return result;
+}
+
+bool LDMRS::setScanFrequency(double scanFreq)
+{
+	bool result;
+	bool beVerboseHere = m_beVerbose;
+
+	printInfoMessage("LDMRS::setScanFrequency: Called.", beVerboseHere);
+
+	if (m_lux == NULL)
+	{
+		printError("LDMRS::setScanFrequency: No LUX-Base object available, aborting!");
+		return false;
+	}
+
+	result = m_lux->cmd_setScanFrequency(scanFreq);
+	if (result == true)
+	{
+		printInfoMessage("LDMRS::setScanFrequency: scan frequency was set.", beVerboseHere);
+	}
+	else
+	{
+		// Failure
+		printError("LDMRS::setScanFrequency: Failed to set scan frequency!");
+	}
+
+	printInfoMessage("LDMRS::setScanFrequency: All done, leaving.", beVerboseHere);
+	return result;
+}
+
 
 //
 // Starte das Einlesen von Daten (Scans, Objekte, Schutzfelder, ...)
