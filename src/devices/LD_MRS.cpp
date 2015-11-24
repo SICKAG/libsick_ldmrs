@@ -28,6 +28,8 @@ using namespace datatypes;
 
 LDMRS::LDMRS(Manager* manager)
 	: m_manager(manager)
+	, m_sopas(NULL)
+	, m_lux(NULL)
 {
 	setDevicetype(Sourcetype_LDMRS);
 	m_beVerbose = false;
