@@ -388,6 +388,16 @@ bool LDMRS::setScanFrequency(double scanFreq)
 	return result;
 }
 
+std::string LDMRS::getSerialNumber()
+{
+	if (m_lux == NULL)
+	{
+		return "(none)";
+	} else {
+		return m_lux->getSerialNumber();
+	}
+}
+
 
 //
 // Starte das Einlesen von Daten (Scans, Objekte, Schutzfelder, ...)

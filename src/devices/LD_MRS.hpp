@@ -86,6 +86,9 @@ public:
 	// valid values are 12.5, 25.0 and 50.0 [Hz].
 	bool setScanFrequency(double scanFreq);
 
+	// returns the serial number
+	std::string getSerialNumber();
+
 	// Function will be called if the scanner loses its tcp connection.
 	static void disconnectFunctionS(void* obj);
 
