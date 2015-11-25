@@ -16,18 +16,19 @@
 
 #include <string>	// for std::string
 #include <vector>	// for std::vector
+#include <stdint.h>
 
 //
 // Standard-Datentypen
 //
-typedef long long			UINT64;
-typedef int 				INT32;
-typedef unsigned int 		UINT32;
-typedef unsigned short int 	UINT16;
-typedef short int 			INT16;
-typedef unsigned char 		UINT8;
-typedef char 				INT8;
-typedef unsigned char 		BYTE;
+typedef uint64_t      UINT64;
+typedef int32_t       INT32;
+typedef uint32_t      UINT32;
+typedef uint16_t      UINT16;
+typedef int16_t       INT16;
+typedef uint8_t       UINT8;
+typedef int8_t        INT8;
+typedef unsigned char BYTE;
 
 #ifndef PI
 	#define PI 3.141592653589793238462
