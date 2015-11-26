@@ -483,7 +483,7 @@ bool LuxBase::cmd_setScanAngles(double startAngle, double endAngle)
 	}
 	bool result;
 	UINT32 uValue;
-	INT16 value = (INT16)(m_scanStartAngle * rad2deg * 32.0);	// Note that m_scanStartAngle is in radians
+	INT16 value = (INT16)(startAngle * rad2deg * 32.0);	// Note that startAngle is in radians
 	// Value should be even
 	makeIntValueEven(value);
 	if (value > 1600)
@@ -509,7 +509,7 @@ bool LuxBase::cmd_setScanAngles(double startAngle, double endAngle)
 	//
 	// End angle
 	//
-	value = (INT16)(m_scanEndAngle * rad2deg * 32.0);	// Note that m_scanEndAngle is in radians
+	value = (INT16)(endAngle * rad2deg * 32.0);	// Note that endAngle is in radians
 	// Value should be even
 	makeIntValueEven(value);
 	if (value > 1598)
