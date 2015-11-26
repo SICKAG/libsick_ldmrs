@@ -1776,12 +1776,11 @@ void LuxBase::decodeScan()
 //		newPoint.setSegmentId(0); // Not available
 	}
 
-	UINT32 scanFlags = 0;
 //	if (m_enableCoordTransformation == true)
 //	{
 //		scanFlags = Scan::FlagVehicleCoordinates;
 //	}
-	scan->setFlags(scanFlags);
+	scan->setFlags(processingFlags);
 
 	//
 	// Set some information about the scanner
@@ -1794,7 +1793,7 @@ void LuxBase::decodeScan()
 	si.setScanFrequency(m_scanFrequency);
 	si.setBeamTilt(m_beamTiltAngle);
 //	si.setScannerStatus(scannerStatus);
-	si.setScanFlags(scanFlags);
+	si.setScanFlags(processingFlags);
 	si.setScanNumber(scanNumber);
 	si.setDeviceID(m_deviceId);
 	si.setScannerType(Sourcetype_LDMRS); // for compatibility, if no value is set in the scanner's config.
