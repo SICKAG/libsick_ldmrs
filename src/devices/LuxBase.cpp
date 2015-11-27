@@ -1481,6 +1481,7 @@ UINT16 LuxBase::decodeAnswerInInputBuffer()
 				removeDataFromInputBuffer(headerLen + payloadLen);
 				break;
 			case 0x7100:		// SensorInfo
+				decodeSensorInfo();
 				removeDataFromInputBuffer(headerLen + payloadLen);
 				break;
 			default:
@@ -1822,6 +1823,23 @@ void LuxBase::decodeScan()
 	m_manager->setDeviceData(scan);
 
 //	printInfoMessage("decodeScan(): Decoded scan with " + toString(scanPoints) + " points.", m_beVerbose);
+}
+
+void LuxBase::decodeSensorInfo()
+{
+	UINT8* sensorInfoBuffer = &(m_inputBuffer[24]);   // Skip the data header
+
+	// decode sensor info
+//	UINT16 sensorInfoVersion = (UINT16)readUValueLE(&(scanBuffer[0]), 2);   // here: 1
+//	UINT16 relatedScanNumber = (UINT16)readUValueLE(&(scanBuffer[2]), 2);
+//	UINT16 fpgaErrorRegister1 = (UINT16)readUValueLE(&(scanBuffer[4]), 2);
+//	UINT16 fpgaErrorRegister2 = (UINT16)readUValueLE(&(scanBuffer[6]), 2);
+//	UINT16 fpgaWarningRegister = (UINT16)readUValueLE(&(scanBuffer[8]), 2);
+//	UINT16 dspWarningRegister = (UINT16)readUValueLE(&(scanBuffer[10]), 2);
+
+	m_temperature = (UINT16)readUValueLE(&(sensorInfoBuffer[12]), 2);
+
+//	...
 }
 
 

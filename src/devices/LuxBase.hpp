@@ -226,6 +226,7 @@ private:
 	bool    decodeGetParameter(UINT32* value);
 	void    decodeObjects();
 	void    decodeScan();
+	void    decodeSensorInfo();
 	void    decodeErrorMessage();
 	double   convertTicktsToAngle(INT16 angleTicks);
 	Point2D readPoint2D(UINT8* buffer);
