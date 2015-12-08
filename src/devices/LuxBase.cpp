@@ -1931,9 +1931,6 @@ void LuxBase::decodeObjects()
 	for (UINT16 i = 0; i < numObjects; i++)
 	{
 		Object newObject;
-		Time t;
-		t.set(0.0);
-		newObject.setTimestamp (t);
 
 		// Offset 0: Object ID
 		UINT16 objectId = (UINT16)readUValueLE(&(m_inputBuffer[bufferOffset]), 2);
@@ -1951,8 +1948,11 @@ void LuxBase::decodeObjects()
 		newObject.setHiddenStatusAge (objectPredictionAge);
 
 		// Offset 6: Relative timestamp
-//		UINT16 relativeTimestamp = (UINT16)readUValueLE(&(m_inputBuffer[bufferOffset]), 2);
+		UINT16 relativeTimestamp = (UINT16)readUValueLE(&(m_inputBuffer[bufferOffset]), 2);
 		bufferOffset += 2;
+		Time t;
+		t.set((double)relativeTimestamp);
+		newObject.setTimestamp (t);
 
 		// Offset 8: Reference point
 		Point2D referencePoint = readPoint2D(&(m_inputBuffer[bufferOffset]));
