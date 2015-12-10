@@ -90,8 +90,6 @@ UINT16 Manager::getNextSourceId()
 //
 bool Manager::addAndRunDevice(Sourcetype deviceType, std::string deviceName, UINT16 wantedId)
 {
-	bool beVerboseHere = true | m_beVerbose;
-	
 	BasicDevice* device;
 	
 	// Device erzeugen
@@ -105,6 +103,17 @@ bool Manager::addAndRunDevice(Sourcetype deviceType, std::string deviceName, UIN
 						" , Name=" + deviceName + "). Ignoring this call!");
 			return false;
 	}
+	return addAndRunDevice(device, deviceName, wantedId);
+}
+
+//
+// Add a external created device object.
+//
+// Note that device needs to be on the heap and will automatically be deleted when the manager is destructed.
+//
+bool Manager::addAndRunDevice(devices::BasicDevice* device, std::string deviceName, UINT16 wantedId)
+{
+	bool beVerboseHere = true | m_beVerbose;
 	
 	// ID erzeugen
 	UINT16 id = wantedId;
