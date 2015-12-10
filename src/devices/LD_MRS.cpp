@@ -388,6 +388,10 @@ bool LDMRS::setScanFrequency(double scanFreq)
 	return result;
 }
 
+void LDMRS::setWeWantObjectData(bool weWantObjectData) {
+	m_weWantObjectData = weWantObjectData;
+}
+
 std::string LDMRS::getSerialNumber()
 {
 	if (m_lux == NULL)
