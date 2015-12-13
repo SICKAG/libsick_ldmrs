@@ -206,43 +206,43 @@ std::string Object::toString() const
 	text += ", objAge=" + ::toString(m_objectAge);
 	text += ", hiddenStatusAge=" + ::toString(m_hiddenStatusAge);
 	text += ", timestamp=" + m_timestamp.toString();
-/*	text += "classification"]= objectClassificationToString(m_classification);
+	text += std::string(", classification=") + objectClassificationToString(m_classification);
 
-	r["classificationAge"] = toS(m_classificationAge);
+	text += ", classificationAge=" + ::toString(m_classificationAge);
 
-	r["classificationQuality"] = toS(m_classificationQuality);
+	text += ", classificationQuality=" + ::toString(m_classificationQuality, 2);
 
-	r["centerPoint"] = m_centerPoint.toString();
-	r["centerPointSigma"] = m_centerPointSigma.toString();
+	text += ", centerPoint=" + m_centerPoint.toString();
+	text += ", centerPointSigma=" + m_centerPointSigma.toString();
 
-	r["courseAngle"] = toS(m_courseAngle);
-	r["courseAngleSigma"] = toS(m_courseAngleSigma);
+	text += ", courseAngle=" + ::toString(m_courseAngle, 2);
+	text += ", courseAngleSigma=" + ::toString(m_courseAngleSigma, 2);
 
-	r["relativeVelocity"] = m_relativeVelocity.toString();
-	r["relativeVelocitySigma"] = m_relativeVelocitySigma.toString();
+	text += ", relativeVelocity=" + m_relativeVelocity.toString();
+	text += ", relativeVelocitySigma=" + m_relativeVelocitySigma.toString();
 
-	r["absoluteVelocity"] = m_absoluteVelocity.toString();
-	r["absoluteVelocitySigma"] = m_absoluteVelocitySigma.toString();
+	text += ", absoluteVelocity=" + m_absoluteVelocity.toString();
+	text += ", absoluteVelocitySigma=" + m_absoluteVelocitySigma.toString();
 
-	r["objectBox"] = m_objectBox.toString();
-	r["objectBoxSigma"] = m_objectBoxSigma.toString();
+	text += ", objectBox=" + m_objectBox.toString();
+	text += ", objectBoxSigma=" + m_objectBoxSigma.toString();
 
-	r["boundingBox"] = m_boundingBox.toString();
-	r["closestPoint"] = m_closestPoint.toString();
+	text += ", boundingBox=" + m_boundingBox.toString();
+	text += ", closestPoint=" + m_closestPoint.toString();
 
-	r["contourPointsNum"] = toS(m_contourPoints.size());
-	r["contourPoints"] = Polygon2D(m_contourPoints).toString();
+	text += ", contourPointsNum=" + ::toString(m_contourPoints.size());
+	text += ", contourPoints=" + Polygon2D(m_contourPoints).toString();
 
-	r["vehicleWLANid"] = toS(m_vehicleWLANid);
-	r["objectHeight"] = toS(m_objectHeight);
-	r["objectHeightSigma"] = toS(m_objectHeightSigma);
-	r["objectMass"] = toS(m_objectMass);
+	text += ", vehicleWLANid=" + ::toString(m_vehicleWLANid, 2);
+	text += ", objectHeight=" + ::toString(m_objectHeight, 2);
+	text += ", objectHeightSigma=" + ::toString(m_objectHeightSigma, 2);
+	text += ", objectMass=" + ::toString(m_objectMass, 2);
 
-	r["maxAbsoluteVelocity"] = toS(m_maxAbsoluteVelocity);
-	r["normalizedMeanPointDist"] = toS(m_normalizedMeanPointDist);
-	r["totalTrackingDuration"] = toS(m_totalTrackingDuration);
-	r["totalTrackedPathLength"] = toS(m_totalTrackedPathLength);
-*/
+	text += ", maxAbsoluteVelocity=" + ::toString(m_maxAbsoluteVelocity, 2);
+	text += ", normalizedMeanPointDist=" + ::toString(m_normalizedMeanPointDist, 2);
+	text += ", totalTrackingDuration=" + ::toString(m_totalTrackingDuration, 2);
+	text += ", totalTrackedPathLength=" + ::toString(m_totalTrackedPathLength, 2);
+
 	return text;
 }
 
