@@ -2065,8 +2065,6 @@ void LuxBase::decodeObjects()
 			numContourPoints = 1;
 		}
 		
-		printInfoMessage("ContourPoints:" + toString(numContourPoints) + ".", true);
-
 		Point2D cp;
 		for (UINT16 c = 0; c < numContourPoints; c++)
 		{
