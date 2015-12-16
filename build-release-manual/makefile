@@ -101,6 +101,7 @@ SOURCES := ../src/main.cpp \
 			../src/application/LdmrsSectorChangeApp.cpp \
 			../src/application/LdmrsFieldApp.cpp \
 			../src/application/LdmrsNtpTimeApp.cpp \
+			../src/application/LdmrsScanpointCoordinateApp.cpp \
 			../src/sopas/colaa.cpp \
 			../src/sopas/colab.cpp \
 			../src/sopas/LdmrsSopasLayer.cpp \

@@ -21,6 +21,7 @@ ScannerInfo::ScannerInfo()
 	, m_scanNumber(0)
 	, m_startAngle(NaN_double)
 	, m_endAngle(NaN_double)
+	, m_processingFlags(0)
 	, m_scanStartTime(Time())
 	, m_scanEndTime(Time())
 	, m_scanFrequency(NaN_double)
@@ -68,6 +69,27 @@ bool ScannerInfo::operator==(const ScannerInfo& other) const
 		&& m_mountingPosition == other.m_mountingPosition
 		;
 }
+
+void ScannerInfo::setProcessingFlags(const UINT16 processingFlags)
+{
+	m_processingFlags = processingFlags;
+}
+
+bool ScannerInfo::isRearMirrorSide()
+{
+	if ((m_processingFlags & 0x0400) != 0)
+	{
+		return true;
+ 	}
+
+ 	return false;
+}
+
+bool ScannerInfo::isFrontMirrorSide()
+{
+ 	return !isRearMirrorSide();
+}
+
 
 void ScannerInfo::setStartAngle(double v)
 {

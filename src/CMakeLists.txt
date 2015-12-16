@@ -10,6 +10,7 @@ SET (LDMRS_Example_HEADERS
 	application/LdmrsFieldApp.hpp
 	application/LdmrsSectorChangeApp.hpp
 	application/LdmrsNtpTimeApp.hpp
+	application/LdmrsScanpointCoordinateApp.hpp
 	application/BasicApplication.hpp
 	devices/BasicDevice.hpp
 	devices/LD_MRS.hpp
@@ -62,6 +63,7 @@ SET (LDMRS_Example_SOURCES
 	application/LdmrsFieldApp.cpp
 	application/LdmrsSectorChangeApp.cpp
 	application/LdmrsNtpTimeApp.cpp
+	application/LdmrsScanpointCoordinateApp.cpp
 	application/BasicApplication.cpp
 	devices/BasicDevice.cpp
 	devices/LD_MRS.cpp

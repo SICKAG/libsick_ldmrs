@@ -17,9 +17,10 @@
 // Change log:
 // 2013-09-18, willhvo:
 //  - Started change log.
-//
 // 2014-03-04, willhvo:
 //  - Added NtpTimeApp demo.
+// 2014-12-18, willhvo:
+//  - Added ScanpointCoordinateApp demo.
 //
 
 #include "tools/errorhandler.hpp"
@@ -66,7 +67,7 @@ int mrsNtpTimeApp()
 	// at startup, the applications may want to be present before the devices are
 	// started. But - this is not needed here.
 	printInfoMessage("mrsNtpTimeApp: Adding the application MrsNtpTimeApp.", true);
-	type = Sourcetype_LdmrsNtpTimeApp;
+	type = Sourcetype_MrsNtpTimeApp;
 	name = "MRS Example NTP time App";
 	id = 51;
 	result = manager.addApplication(type, name, id);
@@ -127,7 +128,7 @@ int sectorChangeApp()
 	// at startup, the applications may want to be present before the devices are
 	// started. But - this is not needed here.
 	printInfoMessage("sectorChangeApp: Adding the application MrsSectorChangeApp.", true);
-	type = Sourcetype_LdmrsChangeApp;
+	type = Sourcetype_MrsChangeApp;
 	name = "MRS Example Sector Change App";
 	id = 51;
 	result = manager.addApplication(type, name, id);
@@ -240,7 +241,7 @@ int mrsFieldApp()
 	bool result = false;
 
 	printInfoMessage("mrsFieldApp: Adding the application MrsFieldApp.", true);
-	type = Sourcetype_LdmrsFieldApp;
+	type = Sourcetype_MrsFieldApp;
 	name = "MRS FieldApp";
 	id = 50;
 	result = manager.addApplication(type, name, id);
@@ -274,6 +275,69 @@ int mrsFieldApp()
 	
 	return 0;
 }
+
+
+//
+// Demo application for scanpoint coordinate calculation. Receives the scanpoints, and prints coordinates of the points at the
+// configured scan angle.
+//
+// The MRS device could be configured like this:
+// m_weWantScanData:          true
+// m_weWantObjectData:        false
+// m_weWantFieldData:         false
+// m_weWantScanDataFromSopas: false
+//
+int mrsScanpointCoordinateApp()
+{
+	// First, create the manager object. The manager handles devices, collects
+	// device data and forwards it to the application(s).
+	printInfoMessage("mrsScanpointCoordinateApp: Creating the manager.", true);
+	Manager manager;
+	
+	// Add the application. As the devices may send configuration data only once
+	// at startup, the applications must be present before the devices are
+	// started.
+	Sourcetype type;
+	std::string name;
+	UINT16 id;
+	bool result = false;
+
+	printInfoMessage("mrsScanpointCoordinateApp: Adding the application MrsScanpointCoordinateApp.", true);
+	type = Sourcetype_MrsScanpointCoordinateApp;
+	name = "MRS CoordinateApp";
+	id = 50;
+	result = manager.addApplication(type, name, id);
+	if (result == false)
+	{
+		printError("mrsScanpointCoordinateApp: Failed to add application " + name + ", aborting!");
+		return 0;
+	}
+	printInfoMessage("mrsScanpointCoordinateApp: Application is running.", true);
+	
+	//
+	// Add and run the sensor
+	//
+	printInfoMessage("mrsScanpointCoordinateApp: Adding the LDMRS device.", true);
+	type = Sourcetype_LDMRS;
+	name = "LDMRS-1";
+	id = 1;
+	result = manager.addAndRunDevice(type, name, id);
+	if (result == false)
+	{
+		printError("mrsScanpointCoordinateApp: Failed to add device " + name + ", aborting!");
+		return 0;
+	}
+
+	// This loop never ends
+	while (1)
+	{
+		// Sleep 100 ms
+		usleep(100000);
+	}
+	
+	return 0;
+}
+
 
 
 //
@@ -350,6 +414,9 @@ int main(int argc, char **argv)
 	
 	// The MRS-App connects to an MRS, reads its configuration and receives all incoming data.
 	result = mrsApp();
+	
+	// The MRS-App connects to an MRS, reads its configuration and displays scanpoint coordinates.
+//	result = mrsScanpointCoordinateApp();
 	
 	// The MRS NtpTimeApp demonstrates setting and reading the NTP timestamp.
 //	result = mrsNtpTimeApp();

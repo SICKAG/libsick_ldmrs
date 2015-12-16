@@ -14,6 +14,7 @@
 #include "application/LdmrsSectorChangeApp.hpp"
 #include "application/LdmrsFieldApp.hpp"
 #include "application/LdmrsNtpTimeApp.hpp"
+#include "application/LdmrsScanpointCoordinateApp.hpp"
 
 using namespace application;
 using namespace devices;
@@ -175,14 +176,17 @@ bool Manager::addApplication(Sourcetype appType, std::string appName, UINT16 wan
 		case Sourcetype_MrsApp:
 			app = new LdmrsApp(this);
 			break;
-		case Sourcetype_LdmrsFieldApp:
+		case Sourcetype_MrsFieldApp:
 			app = new LdmrsFieldApp(this);
 			break;
-		case Sourcetype_LdmrsChangeApp:
+		case Sourcetype_MrsChangeApp:
 			app = new LdmrsSectorChangeApp(this);
 			break;
-		case Sourcetype_LdmrsNtpTimeApp:
+		case Sourcetype_MrsNtpTimeApp:
 			app = new LdmrsNtpTimeApp(this);
+			break;
+		case Sourcetype_MrsScanpointCoordinateApp:
+			app = new LdmrsScanpointCoordinateApp(this);
 			break;
 		default:
 			printError("Manager::addApplication: Unknown application (Type=" + toString((UINT16)appType) +

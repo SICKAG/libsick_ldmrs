@@ -93,6 +93,28 @@ public:
 	
 	/// Set the scanner's scan frequency in [Hz]. Must be non-negative.
 	void setScanFrequency(double freq);
+	
+	// Sets the processing flags of the MRS:
+	//
+	// Bit 0:  ground detection performed: 0 = false, 1 = true
+	// Bit 1:  dirt detection performed: 0 = false, 1 = true
+	// Bit 2:  rain detection performed: 0 = false, 1 = true
+	// Bit 5:  transparency detection performed: 0 = false, 1 = true
+	// Bit 6:  horizontal angle offset added: 0 = false, 1 = true
+	// Bit 10: mirror side: 0=front (for 8-Layer, tilted downward), 1=rear (for 8-layer, tilted upward)
+	// All other flags are reserved-internal and should not be evaluated.
+	//
+	void setProcessingFlags(const UINT16 processingFlags);
+	
+	// Returns true if the scan was scanned with the rear mirror side. In 8-layer scanners, this
+	// side is usually tilted upward.
+	// This information is part of the processing flags.
+	bool isRearMirrorSide();
+
+	// Returns true if the scan was scanned with the front mirror side. In 8-layer scanners, this
+	// side is usually tilted downward.
+	// This information is part of the processing flags.
+	bool isFrontMirrorSide();
 
 	// Returns the angle by which the laser beam is tilted (pitched) in [rad].
 	//
@@ -194,6 +216,7 @@ private:
 	double m_startAngle;
 	double m_endAngle;
 //	float m_syncAngle;
+	UINT16 m_processingFlags;
 
 	/// Start timestamp of the scan received by this scanner.
 	Time m_scanStartTime;

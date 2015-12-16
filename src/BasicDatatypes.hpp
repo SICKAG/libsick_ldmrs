@@ -81,9 +81,10 @@ enum Sourcetype
 
 	// Applications = 0x1000 - 0x1FFF
 	Sourcetype_MrsApp				= 0x1002,
-	Sourcetype_LdmrsChangeApp		= 0x1003,
-	Sourcetype_LdmrsFieldApp		= 0x1004,
-	Sourcetype_LdmrsNtpTimeApp		= 0x1005
+	Sourcetype_MrsChangeApp			= 0x1003,
+	Sourcetype_MrsFieldApp			= 0x1004,
+	Sourcetype_MrsNtpTimeApp		= 0x1005,
+	Sourcetype_MrsScanpointCoordinateApp = 0x1006
 };
 
 namespace datatypes

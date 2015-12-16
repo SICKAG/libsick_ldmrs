@@ -2,9 +2,9 @@
 *** LDMRS Example
 ***
 Date: Sept. 23, 2013
-Last update: March 4, 2014
+Last update: December 18, 2014
 
-A sample project for the LD MRS laserscanner. Intended to be used under Linux.
+An example project for the LD MRS laserscanner. Intended to be used under Linux.
 
 
 To build the project
@@ -82,5 +82,10 @@ Application "NtpTimeApp"
 ========================
 This application demonstrates the setting of a system time in the sensor. It waits for 2 seconds, then
 sets the sensor-internal system time to January 1st, 2000.
+
+Application "ScanpointCoordinateApp"
+====================================
+The ScanpointCoordinateApp demonstrates the use of scanpoint coordinates and allows to verify the coordinate calculation (done in LuxBase.cpp).
+It also demonstrates how to distinguish between 4- and 8-layer-scanners and their mirror sides.
 
 <End of file>

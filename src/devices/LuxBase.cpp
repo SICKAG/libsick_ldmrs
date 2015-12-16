@@ -81,6 +81,9 @@ LuxBase::LuxBase (Manager* manager, const UINT8 deviceId, const std::string long
 	m_tcpDisconnectFunction = NULL;
 	m_fileDisconnectFunction = NULL;
 	
+	m_beamTiltAngle = 0.0;
+	m_upsideDownActive = false;
+	
 	printInfoMessage("LuxBase::LuxBase: Constructor done.", m_beVerbose);
 }
 
@@ -173,9 +176,53 @@ bool LuxBase::initTcp(Tcp::DisconnectFunction function, void* obj)	// , bool beV
 		printError("LuxBase::initTcp(): ERROR: Failed to read scanner status, aborting.");
 		return false;
 	}
+	
+	//
+	// Read the beam tilt.
+	// We need this parameter later for the calculation of cartesian scan point coordinates.
+	//
+	printInfoMessage("LuxBase::initTcp(): Calling readBeamTilt().", m_beVerbose);
+	result = readBeamTilt();
+
+	if (result == true)
+	{
+		// Success, we have a valid beam tilt
+		infoMessage(m_longName + " Beam tilt angle is " + toString(m_beamTiltAngle * rad2deg, 1)+ " degrees.", m_beVerbose);
+	}
+	else
+	{
+		printError("LuxBase::initTcp(): ERROR: Failed to read scanner beam tilt angle, aborting.");
+		return false;
+	}
+	
+
+	//
+	// Read the UpsideDown mode.
+	// We need this parameter later for the calculation of cartesian scan point coordinates.
+	//
+	printInfoMessage("LuxBase::initTcp(): Calling readUpsideDown().", m_beVerbose);
+	result = readUpsideDown();
+
+	if (result == true)
+	{
+		// Success, we have a valid upsideDown flag
+		if (m_upsideDownActive == true)
+		{
+			infoMessage(m_longName + " UpsideDown is active.", m_beVerbose);
+		}
+		else
+		{
+			infoMessage(m_longName + " UpsideDown is not active.", m_beVerbose);
+		}
+	}
+	else
+	{
+		printError("LuxBase::initTcp(): ERROR: Failed to read UpsideDown flag, aborting.");
+		return false;
+	}
 
 	// Start thread for reading temperature once a minute
-//	m_updateThread.run(this);	// .start(boost::bind (&LuxBase::updateThreadFunction, this, _1, _2));
+//	m_updateThread.run(this);
 	
 	return true;
 }
@@ -533,6 +580,79 @@ bool LuxBase::cmd_getStatus()
 	return result;
 }
 
+
+
+/**
+ * Read the current beam tilt angle from the scanner.
+ * The result is stored in m_beamTilt.
+ */
+bool LuxBase::readBeamTilt()
+{
+	if (m_tcp.isOpen() == false)
+	{
+		// There is no connection
+		infoMessage("readBeamTilt() called, but there is no connection - aborting!");
+		return false;
+	}
+
+	// Read beam tilt
+	UINT32 value;
+	bool success = cmd_getParameter(ParaBeamTilt, &value);
+	if (success == true)
+	{
+		INT16 tilt = static_cast<INT16>(value & 0xFFFF);
+		
+		// decompress to angle, in [rad]
+		m_beamTiltAngle = static_cast<double>(tilt) / 10000.0;
+
+		infoMessage("LuxBase::readBeamTilt: " + m_longName + " Beam tilt read. Angle is " + toString(rad2deg * m_beamTiltAngle, 1) + " degrees.");
+	}
+	else
+	{
+		// Failed to read parameters
+		printError("LuxBase::readBeamTilt: " + m_longName + " ERROR: Failed to read beam tilt angle, aborting.");
+	}
+
+	return success;
+}
+
+/**
+ * Read the current UpsideDown flag from the scanner.
+ * The result is stored in m_upsideDownActive.
+ */
+bool LuxBase::readUpsideDown()
+{
+	if (m_tcp.isOpen() == false)
+	{
+		// There is no connection
+		infoMessage("readUpsideDown() called, but there is no connection - aborting!");
+		return false;
+	}
+
+	// Read beam tilt
+	UINT32 value;
+	bool success = cmd_getParameter(ParaUpsideDownMode, &value);
+	if (success == true)
+	{
+		if (value != 0)
+		{
+			m_upsideDownActive = true;
+			infoMessage("LuxBase::readUpsideDown: " + m_longName + " UpsideDown is active.");
+		}
+		else
+		{
+			m_upsideDownActive = false;
+			infoMessage("LuxBase::readUpsideDown: " + m_longName + " UpsideDown is not active.");
+		}
+	}
+	else
+	{
+		// Failed to read parameter
+		printError("LuxBase::readUpsideDown: " + m_longName + " ERROR: Failed to read UpsideDown flag, aborting.");
+	}
+
+	return success;
+}
 
 
 //
@@ -1360,6 +1480,9 @@ UINT16 LuxBase::decodeAnswerInInputBuffer()
 			case 0x2805:		// VehicleStateBasic
 				removeDataFromInputBuffer(headerLen + payloadLen);
 				break;
+			case 0x7100:		// SensorInfo
+				removeDataFromInputBuffer(headerLen + payloadLen);
+				break;
 			default:
 				// Unknown!
 				printWarning("LuxBase::decodeAnswerInInputBuffer(): Unknown datatype 0x" + toHexString(datatype) +
@@ -1589,22 +1712,18 @@ void LuxBase::decodeScan()
 	// Bit 6:  horizontal angle offset added: 0 = false, 1 = true
 	// Bit 10: mirror side: 0=front (for 8-Layer, tilted downward), 1=rear (for 8-layer, tilted upward)
 	// All other flags are reserved-internal and should not be evaluated.
-//	INT16 processingFlags	 	= (INT16)readValueLE(&(scanBuffer[42]), 2);
-//	if ((processingFlags & 0x0400) == 0)
-//	{
+	volatile bool isRearMirrorSide = true;
+	INT16 processingFlags	 	= (INT16)readValueLE(&(scanBuffer[42]), 2);
+	if ((processingFlags & 0x0400) == 0)
+	{
 // 		printInfoMessage("LuxBase::decodeScan(): Mirror side 0.", true);
-// 	}
-// 	else
-// 	{
+		isRearMirrorSide = false;
+ 	}
+ 	else
+ 	{
 // 		printInfoMessage("LuxBase::decodeScan(): Mirror side 1.", true);
-// 	}
-
-	// Scan point list
-	double vAngles[4];
-	vAngles[0] = -1.6 * 0.75 * deg2rad;
-	vAngles[1] = -1.6 * 0.25 * deg2rad;
-	vAngles[2] = 1.6 * 0.25 * deg2rad;
-	vAngles[3] = 1.6 * 0.75 * deg2rad;
+		isRearMirrorSide = true;
+ 	}
 
 	// Time per angle (rad). Used later to calculate the time of the beam inside the scan.
 // 	double angleTime;	// Time in the scan for 1 degree
@@ -1617,6 +1736,7 @@ void LuxBase::decodeScan()
 // 		angleTime = 0.001; // Default to avoid errors: 1 ms in [s]; for emergencies only.
 // 	}
 
+	// Scan point list
 	UINT8* scanPtBuffer;
 	for (UINT16 s = 0; s < scanPoints; s++)
 	{
@@ -1633,23 +1753,17 @@ void LuxBase::decodeScan()
 		// Now add the data to the scan structure
 		ScanPoint& newPoint = scan->addNewPoint();
 
-		// Vertical angle
-		double vAngle = 0.0;
-		if (layer <= 4)
-		{
-			vAngle = vAngles[layer];
-		}
-		else
-		{
-			printWarning("decodeScan(): We have received a scanpoint with an invalid layer value of " + toString(layer) + ".");
-		}
-
 		// Horizontal angle
 		double hAngle = convertTicktsToAngle(horzAngleTicks);	// hAngle is in [rad]
 
+		// Vertical angle
+		double vAngle = 0.0;
+		vAngle = getVAngleOfLayer(isRearMirrorSide, layer, hAngle);
+		
 		// Radial distance
 		double dist = (double)radialDistanceCm / 100.0;	// cm to m
 
+		// Set the coordinates of the new point. Also automatically generates x-y-z coordinates.
 		newPoint.setPolar (dist, hAngle, vAngle);
 
 		// Copy data to new scan point
@@ -1678,7 +1792,7 @@ void LuxBase::decodeScan()
 	si.setEndAngle(endAngle);
 
 	si.setScanFrequency(m_scanFrequency);
-	si.setBeamTilt(0.0);
+	si.setBeamTilt(m_beamTiltAngle);
 //	si.setScannerStatus(scannerStatus);
 	si.setScanFlags(scanFlags);
 	si.setScanNumber(scanNumber);
@@ -1688,6 +1802,7 @@ void LuxBase::decodeScan()
 	start.set(timestampStart);
 	end.set(timestampEnd);
 	si.setTimestamps(start, end);
+	si.setProcessingFlags(processingFlags);	// Mirror side etc.
 
 	// Mounting position
 	double yawAngle, pitchAngle, rollAngle, offsetX, offsetY, offsetZ;
@@ -1708,6 +1823,38 @@ void LuxBase::decodeScan()
 	m_manager->setDeviceData(scan);
 
 //	printInfoMessage("decodeScan(): Decoded scan with " + toString(scanPoints) + " points.", m_beVerbose);
+}
+
+
+/*
+ * Calculate the elevation angle of the scanpoint depending on scan layer, mirror side, horziontal angle and UpsideDown flag.
+ */
+double LuxBase::getVAngleOfLayer(bool isRearMirrorSide, UINT8 layerNumber, double hAngle)
+{
+	// Calculate the effective mirror tilt as a function of the beam tilt at 0 degree horizontally and the current horizontal angle
+	const double effMirrorTilt = m_beamTiltAngle / 2.0 * M_SQRT2 * std::sin(0.5 * hAngle - M_PI_4);
+
+	// Distinguish between the front and back side of the mirror.
+	// Front mirror side: beam tilted/pitched down (positive pitch), rear mirror side: beam tilted/pitched up (negative pitch)
+	double mirrorDirection = 1.0;
+	if (isRearMirrorSide == false)
+	{
+		 mirrorDirection = -1.0;
+	}
+
+	// Take UpsideDown into account
+	if (m_upsideDownActive == true)
+	{
+		mirrorDirection *= -1.0;
+	}
+
+	// Calculate the layer offset of each layer. This calculation defines 0 degree as a symetrical layer.
+	const double numLayers = 4.0;
+	const double verticalBeamDivergence = 0.8 * deg2rad;
+	const double layerOffset = ((numLayers - 1) / 2 - layerNumber) * verticalBeamDivergence;
+	const double vAngle = layerOffset + mirrorDirection * 2 * effMirrorTilt;
+
+	return vAngle;
 }
 
 

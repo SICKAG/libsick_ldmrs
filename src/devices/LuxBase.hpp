@@ -55,12 +55,14 @@ enum MrsParameterId
 	, ParaStartAngle			= 0x1100		// 1/32 deg, Valid is 1600..-1919; Start angle > end angle!
 	, ParaEndAngle				= 0x1101		// 1/32 deg, Valid is 1599..-1920; Start angle > end angle!
 	, ParaAngularResolutionType = 0x1104        // angular resolution type: 0=focused, 1=constant(0.25°), 2=FlexRes
+	, ParaUpsideDownMode		= 0x1109		// UpsideDown mode on/off (0=off, 1=on)
 	, ParaMountingX				= 0x1200		// X-Pos of the scanner, in [cm]
 	, ParaMountingY				= 0x1201		// Y-Pos of the scanner, in [cm]
 	, ParaMountingZ				= 0x1202		// Z-Pos of the scanner, in [cm]
 	, ParaMountingYaw			= 0x1203		// Yaw angle
 	, ParaMountingPitch			= 0x1204		// Pitch angle
 	, ParaMountingRoll			= 0x1205		// Roll angle
+	, ParaBeamTilt				= 0x3302		// Beam tilt angle, in [compressedRadians]
 	, ParaNumSectors            = 0x4000        // Flex Resolution number of sectors
 	, ParaSector1StartAngle     = 0x4001        // Flex Resolution sector 1 start angle
 	, ParaSector2StartAngle     = 0x4002        // Flex Resolution sector 2 start angle
@@ -179,6 +181,8 @@ private:
 	double  m_yawAngle;
 	double  m_pitchAngle;
 	double  m_rollAngle;
+	double 	m_beamTiltAngle;
+	bool m_upsideDownActive;
 
 	// Input stuff
 	UINT8  m_inputBuffer[MRS_INPUTBUFFERSIZE];
@@ -226,6 +230,11 @@ private:
 	double   convertTicktsToAngle(INT16 angleTicks);
 	Point2D readPoint2D(UINT8* buffer);
 	Point2D readSize2D(UINT8* buffer);
+	bool 	readBeamTilt();
+	bool	readUpsideDown();
+	double	getVAngleOfLayer(bool isRearMirrorSide, UINT8 layerNumber, double hAngle);
+
+
 
 	static void readCallbackFunctionS(void* obj, BYTE* buffer, UINT32& numOfBytes);
 	void    readCallbackFunction(BYTE* buffer, UINT32& numOfBytes);
