@@ -31,11 +31,6 @@ endforeach()
 # set up include-directories
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
-# Set compiler flags to be very pedantic
-IF (UNIX)
-	SET( CMAKE_CXX_FLAGS "-Wall -Werror ${CMAKE_CXX_FLAGS}" )
-ENDIF (UNIX)
-
 # Extra cmake macros
 INCLUDE (CheckSymbolExists)
 
