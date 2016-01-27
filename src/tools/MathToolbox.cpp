@@ -16,14 +16,6 @@ const double NaN_double = std::numeric_limits<double>::quiet_NaN();
 /**
  * Berechne die Laenge der Hypothenuse
  */
-double hypot(double x, double y)
-{
-	return sqrt(x*x + y*y);
-}
-
-/**
- * Berechne die Laenge der Hypothenuse
- */
 double hypot(double x, double y, double z)
 {
 	return sqrt(x*x + y*y + z*z);

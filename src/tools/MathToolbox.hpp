@@ -14,7 +14,6 @@
 #include "../BasicDatatypes.hpp"
 
 
-extern double hypot(double x, double y);
 extern double hypot(double x, double y, double z);
 
 /// Not-a-Number in double precision
