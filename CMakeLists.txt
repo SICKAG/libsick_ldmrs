@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
-project(sick_ldmrs)
+project(LIBSICK_LDMRS)
 
 set(SICK_LDMRS_MAJOR_VERSION 0)
 set(SICK_LDMRS_MINOR_VERSION 1)
