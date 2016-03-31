@@ -51,12 +51,18 @@ enum MrsCommandId
 enum MrsParameterId
 {
 	ParaDataOutputFlag			= 0x1012		// Sets the output flags to enable or disable scans, objects, ...
+	, ParaContourPointDensity   = 0x1014		// 0: closest point only, 1: low density, 2: high density
+	, ParaMinimumObjectAge      = 0x1017		// Minimum tracking age (number of scans) of an object to be transmitted. valid: 0..65535
+	, ParaMaximumPredictionAge  = 0x1018		// Maximum prediction age (number of scans) of an object to be transmitted after last observation. valid: 0..65535
 	, ParaScanFrequency			= 0x1102		// Sets the scan frequency, in 1/256 Hz (valid = 3200 (12.5 Hz),6400 (25.0 Hz) and 12800 (50 Hz)
 	, ParaStartAngle			= 0x1100		// 1/32 deg, Valid is 1600..-1919; Start angle > end angle!
 	, ParaEndAngle				= 0x1101		// 1/32 deg, Valid is 1599..-1920; Start angle > end angle!
 	, ParaSyncAngleOffset       = 0x1103        // 1/32 deg, Valid is -5760..5759; angle under which the LD-MRS measures at the time of the external sync pulse
 	, ParaAngularResolutionType = 0x1104        // angular resolution type: 0=focused, 1=constant(0.25°), 2=FlexRes
+	, ParaRangeReduction		= 0x1108		// Available for LDMRS800001.S01 only; 0: full sensitivity (default), 1: lower 4 layers reduced, 2: upper 4 layers reduced, 3: both reduced
 	, ParaUpsideDownMode		= 0x1109		// UpsideDown mode on/off (0=off, 1=on)
+	, ParaIgnoreNearRange		= 0x110A		// Available for LDMRS800001.S01 only; 0: do not ignore points in near range (up to 15m), 1: ignore points in near range if 0x1108 is 1
+	, ParaSensitivityControl	= 0x110B		// 0: not active (default), 1: Sensitivity will be reduced dynamically down to 60% in case of direct sun light.
 	, ParaMountingX				= 0x1200		// X-Pos of the scanner, in [cm]
 	, ParaMountingY				= 0x1201		// Y-Pos of the scanner, in [cm]
 	, ParaMountingZ				= 0x1202		// Z-Pos of the scanner, in [cm]
@@ -276,6 +282,7 @@ public:
 	bool cmd_setParameter(MrsParameterId parameter, UINT32 value);
 	bool cmd_setMountingPos(Position3D mp);
 	bool cmd_setScanAngles(double startAngle, double endAngle);
+	bool cmd_setSyncAngleOffset(double syncAngle);
 	bool cmd_setScanFrequency(double scanFreq);
 	bool cmd_setDataOutputFlags();
 	bool cmd_saveConfiguration();
