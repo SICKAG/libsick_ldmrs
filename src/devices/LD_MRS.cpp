@@ -360,6 +360,34 @@ bool LDMRS::setScanAngles(double startAngle, double endAngle)
 	return result;
 }
 
+bool LDMRS::setSyncAngleOffset(double syncAngle)
+{
+	bool result;
+	bool beVerboseHere = m_beVerbose;
+
+	printInfoMessage("LDMRS::setSyncAngleOffset: Called.", beVerboseHere);
+
+	if (m_lux == NULL)
+	{
+		printError("LDMRS::setSyncAngleOffset: No LUX-Base object available, aborting!");
+		return false;
+	}
+
+	result = m_lux->cmd_setSyncAngleOffset(syncAngle);
+	if (result == true)
+	{
+		printInfoMessage("LDMRS::setSyncAngleOffset: sync angle offset was set.", beVerboseHere);
+	}
+	else
+	{
+		// Failure
+		printError("LDMRS::setSyncAngleOffset: Failed to set sync angle offset!");
+	}
+
+	printInfoMessage("LDMRS::setSyncAngleOffset: All done, leaving.", beVerboseHere);
+	return result;
+}
+
 bool LDMRS::setScanFrequency(double scanFreq)
 {
 	bool result;

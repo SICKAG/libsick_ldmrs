@@ -535,6 +535,33 @@ bool LuxBase::cmd_setScanAngles(double startAngle, double endAngle)
 	return true;
 }
 
+bool LuxBase::cmd_setSyncAngleOffset(double syncAngle)
+{
+	bool result;
+	UINT32 uValue;
+	INT16 value = (INT16)(syncAngle * rad2deg * 32.0);	// Note that syncAngle is in radians
+	if (value > 5759)
+	{
+		value = 5759;
+		printWarning("Para 'SyncAngleOffset' out of range, limiting to 5759!");
+	}
+	if (value < -5760)
+	{
+		value = -5760;
+		printWarning("Para 'SyncAngleOffset' out of range, limiting to -5760!");
+	}
+	uValue = (UINT32)value;	// Note the cast, including the sign transformation to unsigned!
+	uValue = uValue & (1 << 14) - 1; // = 0x00003FFF  (SyncAngleOffset is an INT14)
+	result = cmd_setParameter(ParaSyncAngleOffset, uValue);
+	if (result == false)
+	{
+		// We failed to set the parameter
+		printWarning("The SetParameter command failed!");
+		return false;
+	}
+
+	return true;
+}
 
 
 /**

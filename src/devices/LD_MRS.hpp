@@ -82,6 +82,9 @@ public:
 	// Sets scan start and end angles.
 	bool setScanAngles(double startAngle, double endAngle);
 
+	// Sets sync angle offset.
+	bool setSyncAngleOffset(double syncAngle);
+
 	// Sets scan frequency.
 	// valid values are 12.5, 25.0 and 50.0 [Hz].
 	bool setScanFrequency(double scanFreq);

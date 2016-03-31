@@ -54,6 +54,7 @@ enum MrsParameterId
 	, ParaScanFrequency			= 0x1102		// Sets the scan frequency, in 1/256 Hz (valid = 3200 (12.5 Hz),6400 (25.0 Hz) and 12800 (50 Hz)
 	, ParaStartAngle			= 0x1100		// 1/32 deg, Valid is 1600..-1919; Start angle > end angle!
 	, ParaEndAngle				= 0x1101		// 1/32 deg, Valid is 1599..-1920; Start angle > end angle!
+	, ParaSyncAngleOffset       = 0x1103        // 1/32 deg, Valid is -5760..5759; angle under which the LD-MRS measures at the time of the external sync pulse
 	, ParaAngularResolutionType = 0x1104        // angular resolution type: 0=focused, 1=constant(0.25°), 2=FlexRes
 	, ParaUpsideDownMode		= 0x1109		// UpsideDown mode on/off (0=off, 1=on)
 	, ParaMountingX				= 0x1200		// X-Pos of the scanner, in [cm]
