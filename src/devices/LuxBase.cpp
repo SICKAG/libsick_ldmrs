@@ -2000,6 +2000,10 @@ void LuxBase::decodeObjects()
 		newObject.setBoundingBoxCenter(boundingBoxCenter);
 
 		Point2D boundingBoxSize = readSize2D(&(m_inputBuffer[bufferOffset]));
+		double tmp = boundingBoxSize.getX();
+		// x and y are flipped on the wire
+		boundingBoxSize.setX(boundingBoxSize.getY());
+		boundingBoxSize.setY(tmp);
 		bufferOffset += 4;
 		newObject.setBoundingBox(boundingBoxSize);
 
