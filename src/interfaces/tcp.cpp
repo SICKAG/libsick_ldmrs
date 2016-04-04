@@ -12,6 +12,7 @@
 #include <sys/socket.h> // for socket(), bind(), and connect()
 #include <arpa/inet.h>  // for sockaddr_in and inet_ntoa()
 #include <string.h>     // for memset()
+#include <netdb.h>      // for hostent
 
 
 Tcp::Tcp()
@@ -151,9 +152,11 @@ bool Tcp::open(std::string ipAddress, UINT16 port, bool enableVerboseDebugOutput
 	printInfoMessage("Tcp::open: Connecting. Target address is " + ipAddress + ":" + toString(port) + ".", m_beVerbose);
 	
 	struct sockaddr_in addr;
+	struct hostent *server;
+	server = gethostbyname(ipAddress.c_str());
 	memset(&addr, 0, sizeof(addr));     		// Zero out structure
 	addr.sin_family = AF_INET;
-	addr.sin_addr.s_addr = inet_addr(ipAddress.c_str());	// 	inet_addr("127.0.0.1");
+	bcopy((char *)server->h_addr, (char *)&addr.sin_addr.s_addr, server->h_length);
 	addr.sin_port = htons(port);				// Host-2-Network byte order
 	result = connect(m_connectionSocket, (sockaddr*)(&addr), sizeof(addr));
 	if (result < 0)
