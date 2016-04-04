@@ -323,6 +323,8 @@ void LdmrsSectorChangeApp::changeThreadFunction(bool& endThread, UINT16& waitTim
 
 	if (ldmrs)
 	{
+		ldmrs->setScanAngles(50.0 * deg2rad, -60.0 * deg2rad);
+
 		UINT32 value = 0;
 		if (!ldmrs->getParameter(devices::ParaNumSectors, &value))
 		{
@@ -349,18 +351,18 @@ void LdmrsSectorChangeApp::changeThreadFunction(bool& endThread, UINT16& waitTim
 		}
 
 		// sleep some time to receive some scans first
-		UINT32 sleepTimeMs = 2000;
+		UINT32 sleepTimeMs = 10000;
 		usleep(sleepTimeMs * 1000);
 
 		ScannerInfo::ResolutionMap configuredRM;
-		configuredRM.push_back(std::make_pair(80.f * deg2rad, 1.f * deg2rad));
-		configuredRM.push_back(std::make_pair(60.f * deg2rad, .5f * deg2rad));
-		configuredRM.push_back(std::make_pair(40.f * deg2rad, .25f * deg2rad));
+		configuredRM.push_back(std::make_pair(50.f * deg2rad, 1.f * deg2rad));
+		configuredRM.push_back(std::make_pair(35.f * deg2rad, .5f * deg2rad));
+		configuredRM.push_back(std::make_pair(30.f * deg2rad, .25f * deg2rad));
 		configuredRM.push_back(std::make_pair(20.f * deg2rad, .125f * deg2rad));
 		configuredRM.push_back(std::make_pair(0.f * deg2rad, .25f * deg2rad));
 		configuredRM.push_back(std::make_pair(-20.f * deg2rad, .5f * deg2rad));
-		configuredRM.push_back(std::make_pair(-40.f * deg2rad, 1.f * deg2rad));
-		configuredRM.push_back(std::make_pair(-60.f * deg2rad, 1.f * deg2rad));
+		configuredRM.push_back(std::make_pair(-31.f * deg2rad, 1.f * deg2rad));
+		configuredRM.push_back(std::make_pair(-40.f * deg2rad, .5f * deg2rad));
 
 		changeFlexResConfiguration(configuredRM);
 
