@@ -1567,17 +1567,17 @@ void LuxBase::decodeErrorMessage()
 		{
 			text += "<Scan buffer overflow> ";
 		}
-		if ((m_errorRegister1 & 0x0030) == 0x0030)
+		if ((m_errorRegister1 & 0x0300) == 0x0300)
 		{
 			text += "<APD temperature sensor defective> ";
 		}
 		else
 		{
-			if ((m_errorRegister1 & 0x0010) != 0)
+			if ((m_errorRegister1 & 0x0100) != 0)
 			{
 				text += "<APD undertemperature> ";
 			}
-			if ((m_errorRegister1 & 0x0020) != 0)
+			if ((m_errorRegister1 & 0x0200) != 0)
 			{
 				text += "<APD overtemperature> ";
 			}
