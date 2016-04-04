@@ -416,6 +416,11 @@ bool LDMRS::setScanFrequency(double scanFreq)
 	return result;
 }
 
+void LDMRS::setIpAddress(std::string ipAdress)
+{
+	m_ipAddress = ipAdress;
+}
+
 void LDMRS::setWeWantObjectData(bool weWantObjectData) {
 	m_weWantObjectData = weWantObjectData;
 }
