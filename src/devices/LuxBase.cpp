@@ -1614,7 +1614,7 @@ void LuxBase::decodeErrorMessage()
 		}
 		
 		
-		printInfoMessage(text, true);	// Always print
+		printWarning(text);
 	}
 	else
 	{
@@ -2366,7 +2366,6 @@ void LuxBase::removeAnswerFromInputBuffer()
 bool LuxBase::receiveMrsReply(MrsCommandId cmd, UINT32 timeoutMs, UINT32* value)
 {
 	bool beVerboseHere = m_beVerbose;
-	beVerboseHere = true;
 	
 	printInfoMessage("LuxBase::receiveMrsReply: Entering.", beVerboseHere);
 
@@ -2419,7 +2418,7 @@ bool LuxBase::receiveMrsReply(MrsCommandId cmd, UINT32 timeoutMs, UINT32* value)
 
 			if (cmdInBuffer == 0x8000 + cmd)
 			{
-				printInfoMessage("LuxBase::receiveMrsReply: " + m_longName + " Received that an error occurred.", beVerboseHere);
+				printWarning("LuxBase::receiveMrsReply: " + m_longName + " Received that an error occurred.");
 				result = false;
 				break;
 			}
