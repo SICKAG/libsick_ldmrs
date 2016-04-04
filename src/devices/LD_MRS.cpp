@@ -45,7 +45,7 @@ LDMRS::LDMRS(Manager* manager)
 
 //	m_inputFileName = "/home/willhvo/Temp/raw_ldmrs_log.bin";		// File name of input file. If this name is given, connects to file instead of TCP.
 	m_inputFileName = "";
-	stringToIpTarget("192.168.0.1", m_ipAddress, m_luxPortNumber);	// , "Network IP address where the device is located.", "0.0.0.0");
+	m_ipAddress = "192.168.0.1";	// , "Network IP address where the device is located.", "0.0.0.0");
 	m_luxPortNumber = 12002;	// Network port on which the legacy (non-sopas) device is contacted (for scans and objects), typically 12002
 	m_SopasPortNumber = 2111;	// Network port on which the device is contacted, typically 2111 or 2112.
 

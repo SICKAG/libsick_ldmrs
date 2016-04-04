@@ -174,7 +174,7 @@ private:
 	Manager* m_manager;
 	std::string m_longName;
 	UINT8 m_deviceId;
-	UINT32 m_ipAddress;
+	std::string m_ipAddress;
 	UINT16 m_tcpPortNumber;
 	bool m_readOnlyMode;
 	std::string m_inputFileName;
@@ -261,7 +261,7 @@ private:
 
 public:
 	LuxBase (Manager* manager, const UINT8 deviceID, const std::string longName,
-			 UINT32 ipAddress, UINT16 tcpPortNumber,
+			 std::string ipAddress, UINT16 tcpPortNumber,
 			 double scanFrequency, double scanStartAngle, double scanEndAngle, double offsetX,
 			 double offsetY, double offsetZ, double yawAngle, double pitchAngle, double rollAngle,
 			 bool beVerbose, std::string inputFileName);

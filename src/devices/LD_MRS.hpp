@@ -39,7 +39,7 @@ private:
 	bool m_weWantScanDataFromSopas;
 	
 	bool m_readOnlyMode;
-	UINT32  m_ipAddress;
+	std::string  m_ipAddress;
 	UINT16 m_luxPortNumber;
 	UINT16 m_SopasPortNumber;
 	std::string m_inputFileName;

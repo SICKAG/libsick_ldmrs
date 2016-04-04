@@ -19,7 +19,7 @@ using namespace datatypes;
 
 LdmrsSopasLayer::LdmrsSopasLayer(Manager* manager,
 									const UINT8 deviceId,
-									UINT32 ipAddress,
+									std::string ipAddress,
 									UINT16 portNumber,
 									bool weWantFieldData,
 									bool weWantScanData,

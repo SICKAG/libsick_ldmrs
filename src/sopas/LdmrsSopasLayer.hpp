@@ -29,7 +29,7 @@ class LdmrsSopasLayer: public SopasBase
 public:
 	LdmrsSopasLayer(Manager* manager,
 					const UINT8 deviceID,
-					UINT32 ipAddress,
+					std::string ipAddress,
 					UINT16 portNumber,
 					bool weWantFieldData,
 					bool weWantScanData,
@@ -163,7 +163,7 @@ private:
 	double m_scanFreq;
 	
 	// Local storage
-	UINT32 m_ipAddress;
+	std::string m_ipAddress;
 	UINT16 m_portNumber;
 	bool m_readOnlyMode;
 };

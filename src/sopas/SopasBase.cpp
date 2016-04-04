@@ -94,7 +94,7 @@ SopasBase::~SopasBase()
 // Parameter setup only. Afterwards, call connect() to connect to the scanner.
 //
 bool SopasBase::init(SopasProtocol protocol,
-						UINT32 ipAddress,
+						std::string ipAddress,
 						UINT16 portNumber,
 						bool weWantScanData,
 						bool weWantFieldData,
@@ -220,7 +220,7 @@ bool SopasBase::isReadOnly()
  */
 bool SopasBase::openTcpConnection()
 {
-	printInfoMessage("SopasBase::openTcpConnection: Connecting TCP/IP connection to " + toString(m_ipAddress) + ":" + toString(m_portNumber) + " ...", m_beVerbose);
+	printInfoMessage("SopasBase::openTcpConnection: Connecting TCP/IP connection to " + m_ipAddress + ":" + toString(m_portNumber) + " ...", m_beVerbose);
 
 	bool success = m_tcp.open(m_ipAddress, m_portNumber, m_beVerbose);
 	if (success == false)

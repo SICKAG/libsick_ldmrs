@@ -125,7 +125,7 @@ public:
 	 * @return
 	 */
 	virtual bool init(SopasProtocol protocol,
-						UINT32 ipAddress,
+						std::string ipAddress,
 						UINT16 portNumber,
 						bool weWantScanData,
 						bool weWantFieldData,
@@ -405,7 +405,7 @@ private:
 
 	// TCP
 	Tcp m_tcp;
-	UINT32 m_ipAddress;
+	std::string m_ipAddress;
 	UINT16 m_portNumber;
 
 	bool m_readOnlyMode;

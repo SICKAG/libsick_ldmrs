@@ -48,7 +48,7 @@ namespace devices
 using namespace datatypes;
 
 LuxBase::LuxBase (Manager* manager, const UINT8 deviceId, const std::string longName,
-				  UINT32 ipAddress, UINT16 tcpPortNumber,
+				  std::string ipAddress, UINT16 tcpPortNumber,
 				  double scanFrequency, double scanStartAngle, double scanEndAngle, double offsetX,
 				  double offsetY, double offsetZ, double yawAngle, double pitchAngle, double rollAngle,
 				  bool beVerbose, std::string inputFileName)
@@ -133,7 +133,7 @@ bool LuxBase::initTcp(Tcp::DisconnectFunction function, void* obj)	// , bool beV
 		return false;
 	}
 	
-	printInfoMessage("LuxBase::initTcp: Opening the tcp interface (Addr=" + ipTargetToString(m_ipAddress, m_tcpPortNumber) + ").", m_beVerbose);
+	printInfoMessage("LuxBase::initTcp: Opening the tcp interface (Addr=" + m_ipAddress + ":" + toString(m_tcpPortNumber) + ").", m_beVerbose);
 
 	// Open the interface. Here, we are using our TCP wrapper.
 	result = m_tcp.open(m_ipAddress, m_tcpPortNumber, false);	// m_beVerbose);
