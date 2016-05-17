@@ -71,3 +71,6 @@ install(FILES
 # Install the export set for use with the install-tree
 install(EXPORT SickLDMRSTargets DESTINATION
   "${INSTALL_CMAKE_DIR}" COMPONENT dev)
+
+# Install catkin package.xml
+install(FILES package.xml DESTINATION share/sick_ldmrs)
