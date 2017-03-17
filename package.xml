@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>libsick-ldmrs</name>
-  <version>0.1.0</version>
+  <name>libsick_ldmrs</name>
+  <version>0.0.0</version>
   <description>
     A library for communication with the SICK LD-MRS series of laser scanners.
   </description>
@@ -11,7 +11,7 @@
   <author email="martin.guenther@dfki.de">Martin Günther</author>
   <author email="ros@jochen.sprickerhof.de">Jochen Sprickerhof</author>
 
-  <license>BSD</license>
+  <license>nonstandard</license>
 
   <buildtool_depend>cmake</buildtool_depend>
 
