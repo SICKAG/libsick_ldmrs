@@ -96,6 +96,9 @@ public:
 	// returns the serial number
 	std::string getSerialNumber();
 
+	// returns the firmware version
+	std::string getFirmwareVersion();
+
 	// Function will be called if the scanner loses its tcp connection.
 	static void disconnectFunctionS(void* obj);
 

@@ -435,6 +435,16 @@ std::string LDMRS::getSerialNumber()
 	}
 }
 
+std::string LDMRS::getFirmwareVersion()
+{
+	if (m_lux == NULL)
+	{
+		return "(none)";
+	} else {
+		return m_lux->getFirmwareVersion();
+	}
+}
+
 
 //
 // Starte das Einlesen von Daten (Scans, Objekte, Schutzfelder, ...)
