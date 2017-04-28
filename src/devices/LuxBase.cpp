@@ -1221,8 +1221,8 @@ std::string LuxBase::int2Version (UINT16 val)
 		std::ostringstream oss;
 		oss << std::hex << std::uppercase
 			<< ((val & 0xF000) >> 12) << '.'
-			<< ((val & 0x0F00) >>  8) << '.'
-			<< std::setfill('0') << std::setw(2) << (val & 0x00FF);
+			<< std::setfill('0') << std::setw(2) << ((val & 0x0FF0) >>  4) << '.'
+			<< (val & 0x000F);
 		return oss.str();
 	}
 }
