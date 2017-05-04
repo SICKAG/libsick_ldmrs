@@ -217,8 +217,8 @@ bool LuxBase::initTcp(Tcp::DisconnectFunction function, void* obj)	// , bool beV
 	}
 	else
 	{
-		printError("LuxBase::initTcp(): ERROR: Failed to read UpsideDown flag, aborting.");
-		return false;
+		// Some devices dont have the UpsideDown flag so just ignore this error
+		infoMessage(m_longName + " UpsideDown not supported by firmware.", m_beVerbose);
 	}
 
 	// Start thread for reading temperature once a minute
@@ -675,7 +675,9 @@ bool LuxBase::readUpsideDown()
 	else
 	{
 		// Failed to read parameter
-		printError("LuxBase::readUpsideDown: " + m_longName + " ERROR: Failed to read UpsideDown flag, aborting.");
+		infoMessage("LuxBase::readUpsideDown: " + m_longName + " UpsideDown not supported by firmware.");
+		// cannot read parameter so there is no upsideDown support
+		m_upsideDownActive = false;
 	}
 
 	return success;
