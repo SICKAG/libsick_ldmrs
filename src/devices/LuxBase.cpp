@@ -200,6 +200,7 @@ bool LuxBase::initTcp(Tcp::DisconnectFunction function, void* obj)	// , bool beV
 	// Read the UpsideDown mode.
 	// We need this parameter later for the calculation of cartesian scan point coordinates.
 	//
+
 	printInfoMessage("LuxBase::initTcp(): Calling readUpsideDown().", m_beVerbose);
 	result = readUpsideDown();
 
@@ -215,12 +216,14 @@ bool LuxBase::initTcp(Tcp::DisconnectFunction function, void* obj)	// , bool beV
 			infoMessage(m_longName + " UpsideDown is not active.", m_beVerbose);
 		}
 	}
+/*
+// some devices dont have the UpsideDown flag so just ignore this error
 	else
 	{
 		printError("LuxBase::initTcp(): ERROR: Failed to read UpsideDown flag, aborting.");
 		return false;
 	}
-
+*/
 	// Start thread for reading temperature once a minute
 //	m_updateThread.run(this);
 	
