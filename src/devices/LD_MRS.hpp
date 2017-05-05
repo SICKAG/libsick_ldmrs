@@ -89,6 +89,8 @@ public:
 	// valid values are 12.5, 25.0 and 50.0 [Hz].
 	bool setScanFrequency(double scanFreq);
 
+	std::string getIpAddress();
+
 	void setIpAddress(std::string ipAddress);
 
 	void setWeWantObjectData(bool weWantObjectData);

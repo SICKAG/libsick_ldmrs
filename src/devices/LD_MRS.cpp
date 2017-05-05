@@ -416,6 +416,11 @@ bool LDMRS::setScanFrequency(double scanFreq)
 	return result;
 }
 
+std::string LDMRS::getIpAddress()
+{
+	return m_ipAddress;
+}
+
 void LDMRS::setIpAddress(std::string ipAdress)
 {
 	m_ipAddress = ipAdress;
