@@ -71,7 +71,7 @@ inline bool isNaN (floatT x)
  * \return \a floatValue rounded to the closest integer
  */
 template<typename IntT>
-inline IntT round (float floatValue)
+inline IntT round_to_int (float floatValue)
 {
 
 	//	assert (std::numeric_limits<float>::round_style == std::round_toward_zero);
@@ -85,7 +85,7 @@ inline IntT round (float floatValue)
  * \return \a floatValue rounded to the closest integer
  */
 template<typename IntT>
-inline IntT round (double floatValue)
+inline IntT round_to_int (double floatValue)
 {
 
 	//	assert (std::numeric_limits<double>::round_style == std::round_toward_zero);

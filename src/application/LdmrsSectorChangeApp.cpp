@@ -192,7 +192,7 @@ INT16 radian2Int (float radAngle)
 {
 	float rad2ticks = float(devices::LuxBase::ANGULAR_TICKS_PER_ROTATION) / (2.f * PI);	// conversion factor from [rad] to [ticks]
 	radAngle = normalizeRadians(radAngle);									// shift [pi, 2*pi) to [-pi, 0)
-	INT16 angleInt = round<INT16> (radAngle * rad2ticks);
+	INT16 angleInt = round_to_int<INT16> (radAngle * rad2ticks);
 	return angleInt;
 }
 
