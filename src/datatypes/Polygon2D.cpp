@@ -306,7 +306,7 @@ Box2D Polygon2D::getBoundingBox() const
 std::pair<Polygon2D::floatingpoint_type, Polygon2D::floatingpoint_type> Polygon2D::getBoundingAngles() const
 {
 	if (empty())
-		return std::make_pair<floatingpoint_type, floatingpoint_type>(0, 0);
+		return std::make_pair(0, 0);
 
 	// Need to check whether the origin is inside the polygon. BUT: If
 	// the origin is directly on the boundary, containsPoint() may or
@@ -316,7 +316,7 @@ std::pair<Polygon2D::floatingpoint_type, Polygon2D::floatingpoint_type> Polygon2
 	if (containsPoint(Point2D(0, 0)))
 	{
 		// Origin is inside. Then return the full interval.
-		return std::make_pair<floatingpoint_type, floatingpoint_type>(-PI, PI);
+		return std::make_pair(-PI, PI);
 	}
 
 	// The usual case: The polygon does not contain the origin. Then we
@@ -365,7 +365,7 @@ std::pair<Polygon2D::floatingpoint_type, Polygon2D::floatingpoint_type> Polygon2
 		}
 	}
 
-	return std::make_pair<floatingpoint_type, floatingpoint_type>(minangle, maxangle);
+	return std::make_pair(minangle, maxangle);
 }
 
 /**

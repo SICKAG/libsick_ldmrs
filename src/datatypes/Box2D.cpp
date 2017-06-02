@@ -147,7 +147,7 @@ Box2D::getBoundingAngles() const
 	if (containsPoint(Point2D(0, 0)))
 	{
 		// Origin is inside. Then return the full interval.
-		return std::make_pair<value_type, value_type>(-PI, PI);
+		return std::make_pair(-PI, PI);
 	}
 
 	// The usual case: The box does not contain the origin. Then we
@@ -167,7 +167,7 @@ Box2D::getBoundingAngles() const
 			maxangle = pointangle;
 	}
 
-	return std::make_pair<value_type, value_type>(minangle, maxangle);
+	return std::make_pair(minangle, maxangle);
 }
 
 bool Box2D::containsPoint(const Point2D& point) const
