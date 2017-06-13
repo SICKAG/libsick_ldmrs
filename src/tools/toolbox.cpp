@@ -285,12 +285,14 @@ std::string toString(UINT32 value)
 	return (std::string(c));
 }
 
+#if INTPTR_MAX != INT32_MAX
 std::string toString(size_t value)
 {
 	char c[16];
 	sprintf(c, "%zu", value);
 	return (std::string(c));
 }
+#endif
 
 /*
  * Konvertiere Zahl in formatierten String.
