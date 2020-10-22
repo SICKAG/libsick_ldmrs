@@ -450,6 +450,25 @@ std::string LDMRS::getFirmwareVersion()
 	}
 }
 
+std::string LDMRS::getFPGAVersion()
+{
+	if (m_lux == NULL)
+	{
+		return "(none)";
+	} else {
+		return m_lux->getFPGAVersion();
+	}
+}
+
+std::string LDMRS::getTemperature()
+{
+	if (m_lux == NULL)
+	{
+		return "(none)";
+	} else {
+		return std::to_string(m_lux->getTemperature());
+	}
+}
 
 //
 // Starte das Einlesen von Daten (Scans, Objekte, Schutzfelder, ...)
