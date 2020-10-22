@@ -101,6 +101,12 @@ public:
 	// returns the firmware version
 	std::string getFirmwareVersion();
 
+	// returns the FPGA version
+	std::string getFPGAVersion();
+
+	// returns the sensor temperature in degree celsius
+	double getTemperature();
+
 	// Function will be called if the scanner loses its tcp connection.
 	static void disconnectFunctionS(void* obj);
 
