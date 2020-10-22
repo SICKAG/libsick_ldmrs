@@ -460,13 +460,13 @@ std::string LDMRS::getFPGAVersion()
 	}
 }
 
-std::string LDMRS::getTemperature()
+double LDMRS::getTemperature()
 {
 	if (m_lux == NULL)
 	{
-		return "(none)";
+		return ::NaN_double; //"(none)";
 	} else {
-		return std::to_string(m_lux->getTemperature());
+		return m_lux->getTemperature(); // std::to_string(m_lux->getTemperature());
 	}
 }
 

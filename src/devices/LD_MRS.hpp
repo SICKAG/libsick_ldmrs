@@ -105,7 +105,7 @@ public:
 	std::string getFPGAVersion();
 
 	// returns the sensor temperature in degree celsius
-	std::string getTemperature();
+	double getTemperature();
 
 	// Function will be called if the scanner loses its tcp connection.
 	static void disconnectFunctionS(void* obj);
