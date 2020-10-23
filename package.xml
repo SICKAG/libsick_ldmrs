@@ -11,7 +11,7 @@
   <author email="martin.guenther@dfki.de">Martin Günther</author>
   <author email="ros@jochen.sprickerhof.de">Jochen Sprickerhof</author>
 
-  <license>nonstandard</license>
+  <license>Apache License 2.0</license>
 
   <buildtool_depend>cmake</buildtool_depend>
 
