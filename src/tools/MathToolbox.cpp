@@ -13,6 +13,8 @@
 const double NaN_double = std::numeric_limits<double>::quiet_NaN();
 //const float NaN = std::numeric_limits<float>::quiet_NaN();
 
+#if __cplusplus < 201703L
+
 /**
  * Berechne die Laenge der Hypothenuse
  */
@@ -21,6 +23,7 @@ double hypot(double x, double y, double z)
 	return sqrt(x*x + y*y + z*z);
 }
 
+#endif  // C++17
 
 /**
  * Normalizes an angle given in radians by adding or subtracting an integer
