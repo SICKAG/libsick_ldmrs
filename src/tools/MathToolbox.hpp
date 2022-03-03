@@ -13,8 +13,9 @@
 #include <cmath>	// for abs()
 #include "../BasicDatatypes.hpp"
 
-
+#if __cplusplus < 201703L
 extern double hypot(double x, double y, double z);
+#endif  // C++17
 
 /// Not-a-Number in double precision
 extern const double NaN_double;
