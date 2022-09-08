@@ -15,7 +15,7 @@
 
 namespace devices
 {
-	
+
 #define SOPASBASE_VERSION "1.0.0"
 
 const std::string SopasBase::EVENTNAME_SUBSCRIBE_EVALCASES("LFErec");
@@ -60,7 +60,7 @@ SopasBase::SopasBase() :
 	m_state(CONSTRUCTED)
 {
 	m_beVerbose = false;
-	
+
 	m_protocol = CoLa_A;	// Default protocol is CoLa-A
 }
 
@@ -124,7 +124,7 @@ bool SopasBase::init(SopasProtocol protocol,
 bool SopasBase::connect()
 {
 	printInfoMessage("SopasBase::connect: Called.", m_beVerbose);
-	
+
 	assert (m_state == CONSTRUCTED); // must not be opened or running already
 
 	// Initialise buffer variables
@@ -317,7 +317,7 @@ void SopasBase::readCallbackFunction(UINT8* buffer, UINT32& numOfBytes)
 		m_numberOfBytesInReceiveBuffer = 0;
 	}
 
-	printInfoMessage("SopasBase::readCallbackFunction(): Leaving. Current input buffer fill level is " + 
+	printInfoMessage("SopasBase::readCallbackFunction(): Leaving. Current input buffer fill level is " +
 									 ::toString(m_numberOfBytesInReceiveBuffer) + " bytes.", beVerboseHere);
 }
 
@@ -442,7 +442,7 @@ SopasEventMessage SopasBase::findFrameInReceiveBuffer()
 		pos = 4;
 		payloadlength = colab::getIntegerFromBuffer<UINT32>(m_receiveBuffer, pos);
 		printInfoMessage("SopasBase::findFrameInReceiveBuffer: Decoded payload length is " + ::toString(payloadlength) + " bytes.", m_beVerbose);
-		
+
 		// Ist die Datenlaenge plausibel und wuede in den Puffer passen?
 		if (payloadlength > (sizeof(m_receiveBuffer) - 9))
 		{
@@ -520,10 +520,10 @@ void SopasBase::sendCommandBuffer(UINT8* buffer, UINT16 len)
 	{
 		colab::addFrameToBuffer(sendBuffer, buffer, &len);
 	}
-	
+
 	// Debug: Print buffer
 //	traceBuffer("Cmd buffer contents:", sendBuffer, len);
-	
+
 	// Send command (blocking)
 	m_tcp.write(sendBuffer, len);
 }
@@ -644,7 +644,7 @@ bool SopasBase::receiveAnswer_CoLa_A(SopasCommand cmd, UINT16 index, UINT32 time
 					else if (receivedCommand == EA)
 					{
 						// Antwort auf Event-Abonnement setzen/loeschen.
-						printInfoMessage("SopasBase::receiveAnswer_CoLa_A: Event (by index) successfully (un)registered: " + 
+						printInfoMessage("SopasBase::receiveAnswer_CoLa_A: Event (by index) successfully (un)registered: " +
 										 ::toString(receivedIndex) + ".", m_beVerbose);
 
 						m_numberOfBytesInResponseBuffer = 0;
@@ -976,7 +976,7 @@ std::string SopasBase::convertSopasErrorCodeToText(UINT16 errorCode)
 		default:
 			return "(unknown_Sopas_error_code)";
 	}
-	
+
 	return "(unknown_Sopas_error_code)";
 }
 
@@ -987,7 +987,7 @@ bool SopasBase::receiveAnswer_CoLa_B(SopasCommand cmd, UINT16 index, UINT32 time
 {
 	bool beVerboseHere = m_beVerbose;
 //	beVerboseHere = true;
-	
+
 	printInfoMessage("SopasBase::receiveAnswer_CoLa_B_idx: Entering function.", beVerboseHere);
 
 	SopasCommand receivedCommand;
@@ -1051,7 +1051,7 @@ bool SopasBase::receiveAnswer_CoLa_B(SopasCommand cmd, UINT16 index, UINT32 time
 				m_numberOfBytesInResponseBuffer = 0;
 				return false;
 			}
-			
+
 			else if (receivedCommand == WA)
 			{
 				// Variable schreiben erfolgreich
@@ -1278,7 +1278,7 @@ void SopasBase::processFrame_CoLa_B(SopasEventMessage& frame)
 						;
 				}
 				break;
-				
+
 			default: // by name
 				printWarning("SopasBase::processFrame_CoLa_B: Decoding of events by name is not implemented yet.");
 				eventName = frame.getVariableName();
@@ -1461,7 +1461,7 @@ SopasBase::SopasCommand SopasBase::stringToSopasCommand(const std::string& cmdSt
 //
 std::string SopasBase::sopasCommandToString(SopasCommand cmd)
 {
-	
+
 	if (cmd == RN)
 	{
 		return ("RN");	// Request by Name
@@ -1484,7 +1484,7 @@ std::string SopasBase::sopasCommandToString(SopasCommand cmd)
 	else if (cmd == WI)
 	{
 		return ("WI");		// Write Variable
-	} 
+	}
 	else if (cmd == MI)
 	{
 		return ("MI");		// Invoke Method
@@ -1492,7 +1492,7 @@ std::string SopasBase::sopasCommandToString(SopasCommand cmd)
 	else if (cmd == AI)
 	{
 		return ("AI");		// Method Result (Answer)
-	} 
+	}
 	else if (cmd == EI)
 	{
 		return ("EI");		// Register Event
@@ -1530,12 +1530,12 @@ std::string SopasBase::sopasCommandToString(SopasCommand cmd)
 	else if (cmd == FA)
 	{
 		return ("FA");		// Error
-	} 
+	}
 	else
 	{
 		printError("SopasBase::sopasCommandToString: Trying to resolve an unknown command!");
 	}
-	
+
 	return "(unknown)";
 }
 
@@ -1554,8 +1554,8 @@ bool SopasBase::action_getScannerTypeAndVersion()
 	bool result = false;
 
 	// Clear old data.
-	m_scannerName.empty();
-	m_scannerVersion.empty();
+	m_scannerName.clear(); // m_scannerName.empty();
+	m_scannerVersion.clear(); // m_scannerVersion.empty();
 
 	SopasAnswer* answer = NULL;
 	result = readVariable(INDEX_DEVICE_IDENT, answer);
@@ -1908,7 +1908,7 @@ bool SopasBase::writeVariable(UINT16 variableIndex, BYTE* parameters, UINT16 par
 {
 	bool beVerboseHere = m_beVerbose;
 //	beVerboseHere = true;
-	
+
 	if (m_readOnlyMode == true)
 	{
 		printInfoMessage("SopasBase::writeVariable: ReadOnly Modus - ignore writing to variable index '" + ::toString(variableIndex) +
@@ -1919,23 +1919,23 @@ bool SopasBase::writeVariable(UINT16 variableIndex, BYTE* parameters, UINT16 par
 	// Create the command buffer
 	UINT32 cmdBufferLen = parametersLength + 4;
 	BYTE* cmdBuffer = new BYTE[cmdBufferLen];
-	
+
 	// Add the command
 	colab::addStringToBuffer(&(cmdBuffer[0]), COMMAND_Write_Variable_ByIndex);
-	
+
 	// Add the index
 	BYTE* buffer = &(cmdBuffer[2]);
 	memwrite_UINT16(buffer, variableIndex);
 //	UINT16 pos = 0;
 //	colab::addIntegerToBuffer<UINT16>(&(cmdBuffer[2]), pos, variableIndex);
-	
+
 	// Copy the data
 	memcpy(&(cmdBuffer[4]), parameters, parametersLength);
-	
+
 	// Send. The frame is added automatically.
 	printInfoMessage("SopasBase::writeVariable: Sending command buffer now (payload len=" + toString(parametersLength+4) + " bytes).", beVerboseHere);
 	sendCommandBuffer(cmdBuffer, cmdBufferLen);
-	
+
 	printInfoMessage("SopasBase::writeVariable: Command sent, waiting for reply...", beVerboseHere);
 	SopasAnswer* answer = NULL;
 	// Wait for answer
@@ -2207,7 +2207,7 @@ std::string SopasEventMessage::getCommandString() const
 
 
 //
-// Returns a pointer to the first payload byte. 
+// Returns a pointer to the first payload byte.
 // CoLa-A: Points beyond the leading "0x02" to the "s..." data.
 // CoLa-B: Points beyond the magic word and length bytes, to the "s..." data.
 //
@@ -2240,7 +2240,7 @@ INT32 SopasEventMessage::getVariableIndex()
 		printWarning("SopasEventMessage::getVariableIndex: Encoding is not ByIndex, aborting!");
 		return index;
 	}
-	
+
 	BYTE* bufferPos = &getPayLoad()[3];
 	switch (m_protocol)
 	{
