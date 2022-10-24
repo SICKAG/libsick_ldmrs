@@ -2,6 +2,7 @@
  * ErrorHandler.
  *
  */
+#include <pthread.h>
 #include <stdio.h>      // for printf() and fprintf()
 #include <stdlib.h>     // for atoi() and exit()
 // #include <string.h>     // for memset()
